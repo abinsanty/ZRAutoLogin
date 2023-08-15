@@ -28,8 +28,8 @@ chrome_driver = webdriver.Chrome(options=chrome_options)
 
 def portal_login(driver):
     # Portal Login Credentials
-    portal_username = input("Portal Username: ")
-    portal_password = getpass("Portal Password: ")
+    portal_username = "***REMOVED***" #input("Portal Username: ")
+    portal_password = "***REMOVED***" #getpass("Portal Password: ")
 
     # Opens the Zebra Robotics Login Page
     driver.get(ZEBRA_PORTAL_URL)
@@ -45,24 +45,36 @@ def portal_login(driver):
     # Selects the branch
     driver.find_element(By.ID, 'kt_subheader_quick_actions').click()
     driver.find_element(By.LINK_TEXT, 'Cary').click()
+
     # Saves the window ID for ZR portal
     portal_window_id = chrome_driver.current_window_handle
 
 def canvas_login(driver):
-    # Creates a new tab and navigates to Canvas
-    driver.switch_to.new_window('tab')
-    driver.get(ZEBRA_LMS_URL)
-
     # LMS Login Credentials
-    lms_username = input("LMS Username: ")
-    lms_password = getpass("LMS Password: ")
+    lms_username = "***REMOVED***" #input("LMS Username: ")
+    lms_password = "***REMOVED***" #getpass("LMS Password: ")
+
+    # Creates a new tab and navigates to Canvas
+    driver.execute_script('window.open("https://lms.zebrarobotics.com", "new_window")')
+
+    #chrome_driver.switch_to.window('Log In to Canvas')
+
+    #driver.get(ZEBRA_LMS_URL)
 
     # Enters username and password into LMS, then clicks submit
-    driver.find_element(By.ID, 'pseudonym_session_unique_id').send_keys(lms_username)
-    driver.find_element(By.ID, 'pseudonym_session_password').send_keys(lms_password)
+    driver.find_element(By.NAME, 'pseudonym_session[unique_id]').send_keys(lms_username)
+    driver.find_element(By.ID, 'pseudonym_session[password]').send_keys(lms_password)
+    driver.find_element(By.TAG_NAME, 'button').click()
 
 # Minimizes the window until further input
 #chrome_driver.minimize_window()
+portal_login(chrome_driver)
+
+#chrome_driver.execute_script('window.open("https://lms.zebrarobotics.com", "new_window")')
+
+#chrome_driver.switch_to.new_window('tab')
+
+canvas_login(chrome_driver)
 
 ### TEMPORARY
 # Keeps window open until user exits with Ctrl+C
