@@ -43,12 +43,22 @@ def canvas_login(driver):
 
     # Creates a new tab and navigates to Canvas
     driver.execute_script('window.open("https://lms.zebrarobotics.com", "new_window")')
-
+    
+    # Switches window focus to our new window
     driver.switch_to.window(driver.window_handles[1])
+
     # Enters username and password into LMS, then clicks submit
     driver.find_element(By.CSS_SELECTOR, '#pseudonym_session_unique_id').send_keys(lms_username)
     driver.find_element(By.XPATH, '//*[@id="pseudonym_session_password"]').send_keys(lms_password)
     driver.find_element(By.CSS_SELECTOR, '#login_form > div.ic-Login__actions > div.ic-Form-control.ic-Form-control--login > button').click()
+
+# The find_attendance function will open the attendance, navigate
+# to the correct day, and open the correct batch of students.
+# @param driver - WebDriver object
+def find_attendance(driver):
+    # Clicks batches, 
+    driver.find_element(By.XPATH, '//*[@id="kt_header_menu"]/ul/li[2]/a').click()
+    driver.find_element(By.XPATH, '//*[@id="kt_header_menu"]/ul/li[2]/div/ul/li[1]/a').click()
 
 
 def main():
@@ -72,8 +82,10 @@ def main():
     # Logs into Zebra Dashboard
     portal_login(chrome_driver)
 
+    find_attendance(chrome_driver)
+
     # Logs into Zebra Canvas LMS
-    canvas_login(chrome_driver)
+    #canvas_login(chrome_driver)
 
     ### TEMPORARY
     # Keeps window open until user exits with Ctrl+C
