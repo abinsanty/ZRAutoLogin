@@ -10,11 +10,13 @@ from getpass import getpass
 ZEBRA_PORTAL_URL = "https://portal.zebrarobotics.com/"
 ZEBRA_LMS_URL = "https://lms.zebrarobotics.com"
 
-
+# The portal_login function takes our WebDriver object as a parameter
+# and logs into the Zebra Robotics portal.
+# @param driver - WebDriver object
 def portal_login(driver):
     # Portal Login Credentials
-    portal_username = "***REMOVED***" #input("Portal Username: ")
-    portal_password = "***REMOVED***" #getpass("Portal Password: ")
+    portal_username = input("Portal Username: ")
+    portal_password = getpass("Portal Password: ")
 
     # Opens the Zebra Robotics Login Page
     driver.get(ZEBRA_PORTAL_URL)
@@ -31,10 +33,13 @@ def portal_login(driver):
     # Saves the window ID for ZR portal
     #portal_window_id = chrome_driver.current_window_handle
 
+# The canvas_login function takes our WebDriver object as a parameter
+# and logs into the Zebra Robotics Canvas.
+# @param driver - WebDriver object
 def canvas_login(driver):
     # LMS Login Credentials
-    lms_username = "***REMOVED***" #input("LMS Username: ")
-    lms_password = "***REMOVED***" #getpass("LMS Password: ")
+    lms_username = input("LMS Username: ")
+    lms_password = getpass("LMS Password: ")
 
     # Creates a new tab and navigates to Canvas
     driver.execute_script('window.open("https://lms.zebrarobotics.com", "new_window")')
@@ -46,7 +51,7 @@ def canvas_login(driver):
     driver.find_element(By.CSS_SELECTOR, '#login_form > div.ic-Login__actions > div.ic-Form-control.ic-Form-control--login > button').click()
 
 
-if __name__ == '__main__':
+def main():
     # Chrome Options
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--start-maximized")
@@ -80,3 +85,6 @@ if __name__ == '__main__':
 
     # Closes the WebDriver manually
     chrome_driver.quit()
+
+if __name__ == '__main__':
+    main()
